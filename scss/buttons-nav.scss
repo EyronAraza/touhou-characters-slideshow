@@ -1,0 +1,89 @@
+// Variables
+$navigationContainerWidth: 900px;
+$navigationContainerHeight: 130px;
+$buttonCircleSize: 120px;
+$buttonRadius: 100%;
+$fadeTransition: 1s;
+
+/* Styling navigation container */
+#navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-wrap: nowrap;
+    max-width: $navigationContainerWidth;
+    height: $navigationContainerHeight;
+    margin: -8px auto;
+    text-align: center;
+
+    // Styling labels
+    label {
+        flex-shrink: 0;
+        width: $buttonCircleSize;
+        height: $buttonCircleSize;
+        border: 4px solid lightgrey;
+        border-radius: $buttonRadius;
+        background-color: grey;
+        overflow: hidden;
+        box-shadow: 0 0px 15px 0px black;
+        cursor: pointer;
+        transition: $fadeTransition;
+
+        // Styling images in the labels
+        img {
+            width: 150%;
+            height: 220%;
+            text-align: center;
+            filter: brightness(50%);
+            transition: $fadeTransition;
+        }
+
+        // Current selected image
+        .currentSelectImage {
+            filter: brightness(100%);
+        }
+
+        // Hover effect
+        &:hover {
+            background-color: white;
+            transform: rotateY(360deg);
+            box-shadow: 0 0px 15px 0px red;
+
+            img {
+                filter: brightness(100%);
+            }
+        }
+
+        // Positioning differently for each image
+        .char-img-2 {
+            position: relative;
+            left: -10px;
+            top: -15px;
+        }
+
+        .char-img-3 {
+            position: relative;
+            left: -30px;
+            top: 5px;
+        }
+
+        .char-img-4 {
+            position: relative;
+            left: -20px;
+            top: 0;
+        }
+
+        .char-img-5 {
+            position: relative;
+            left: -30px;
+            top: 0;
+        }
+    }
+
+    // Current selected button
+    .currentSelect {
+        background-color: white;
+        border: 4px solid red;
+    }
+}

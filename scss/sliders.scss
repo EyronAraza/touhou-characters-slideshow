@@ -1,0 +1,177 @@
+// VARIABLES
+$slidesAmount: 5; // amount of each slide divs
+$sliderWidth: 1100px;
+$sliderHeight: 450px;
+$sliderColor: rgba(248, 248, 255, 0.8);
+$slideTransitionSec: 0.75s;
+$headerNameColors: #FF0000, #000, #70706f, #0c71e0, #6f2da9;
+$headerNameShadowColors: #FF8080, #808080, #B8B8B7, #86B8F0, #B796D4;
+$imageWidth: 300px;
+$imageHeight: 360px;
+
+/* SLIDER DIV CONTAINER */
+#slider {
+    margin: 40px auto;
+    max-width: $sliderWidth;
+    text-align: center;
+
+    & input[type=radio] {
+        display: none;
+    }
+
+    // STYLE ALL CHECKBOXES
+    input[type=checkbox] {
+        display: none;
+    }
+}
+
+/* STYLING SLIDESHOW */
+#slides {
+    padding: 0px 50px;
+    border-radius: 20px;
+    background-color: $sliderColor;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 0px 15px 0px black;
+
+    // STYLING THE INNER OF SLIDER
+    .inner {
+        transition: margin-left $slideTransitionSec;
+        width: 100% * $slidesAmount;
+        line-height: 0;
+        height: $sliderHeight;
+        float: left;
+
+        // Loop through each slide
+        @for $i from 1 through $slidesAmount {
+            .slide:nth-child(#{$i}) {
+
+                // Style slide's h2
+                h2 {
+                    position: relative;
+                    width: 100%;
+                    font-size: 2.5em;
+                    opacity: 1;
+                    color: nth($headerNameColors, $i);
+                    text-shadow: 1.5px 1.5px nth($headerNameShadowColors, $i);
+                }
+            }
+        }
+    }
+
+    // STYLING A SLIDE
+    .slide {
+        width: 100% / $slidesAmount;
+        float: left;
+        display: block;
+        height: 100%;
+
+        // IMAGE INSIDE THE SLIDE
+        img {
+            position: relative;
+            height: $imageHeight;
+            width: $imageWidth;
+            cursor: pointer;
+            transition: 0.1s;
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+    }
+}
+
+/* OVERFLOW INSIDE SLIDER */
+#overflow {
+    width: 100%;
+    overflow: hidden;
+}
+
+/* SLIDE CHECK FOR NAVIGATION */
+@for $i from 1 through $slidesAmount {
+    #slide#{$i}:checked~#slides .inner {
+        margin-left: ($i - 1) * -100%;
+    }
+}
+
+/* CHARACTER INFO BOX */
+.char-info {
+    position: relative;
+    right: 100px;
+    float: right;
+    background-color: white;
+    box-shadow: 0px 0px 5px 0px black;
+    border-radius: 10px;
+    width: 350px;
+    height: auto;
+    padding: 10px 10px;
+    display: none;
+
+    // Styling table
+    table {
+        border-collapse: collapse;
+        height: auto;
+        width: 100%;
+        font-size: 1.1em;
+
+        // Styling table cells
+        td {
+            font-weight: bold;
+            padding-left: 10px;
+            text-align: left;
+            line-height: normal;
+            height: 50px;
+        }
+    }
+}
+
+// Loop through each slide
+@for $i from 1 through $slidesAmount {
+    .char-info-#{$i} {
+
+        // Styling the text's span in tables
+        .table-type {
+            background-color: nth($headerNameColors, $i);
+            color: white;
+            border-radius: 5px;
+        }
+    }
+}
+
+/* CHECKBOX TO OPEN CHARACTER INFO BOX */
+input[type=checkbox]:checked~.char-info {
+    display: block;
+    animation: animate-char-info 0.5s forwards;
+}
+
+/* ANIMATE CHARACTER INFO BOX */
+@keyframes animate-char-info {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* TO PLAY ANIMATION ON IMAGE WHEN NAVIGATING SLIDES (executed from JS) */
+.animate-char-slide {
+    animation: animate-char-img-slide $slideTransitionSec;
+}
+
+/* ANIMATE CHARACTER IMAGE WHEN NAVIGATING SLIDES */
+@keyframes animate-char-img-slide {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(0.7);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
